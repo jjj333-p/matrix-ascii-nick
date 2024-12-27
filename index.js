@@ -3,7 +3,6 @@ import {
 	AutojoinRoomsMixin,
 	MatrixClient,
 	SimpleFsStorageProvider,
-	RichRepliesPreprocessor,
 } from "matrix-bot-sdk";
 import { readFileSync } from "node:fs";
 import { parse } from "yaml";
@@ -13,11 +12,6 @@ const loginFile = readFileSync("./db/login.yaml", "utf8");
 const loginParsed = parse(loginFile);
 const homeserver = loginParsed["homeserver-url"];
 const accessToken = loginParsed["login-token"];
-const prefix = loginParsed.prefix;
-const msgLimit = loginParsed["msg-limit"];
-
-//keep track of whos ranting
-const rants = new Map();
 
 //the bot sync something idk bro it was here in the example so i dont touch it ;-;
 const storage = new SimpleFsStorageProvider("bot.json");
@@ -25,9 +19,6 @@ const storage = new SimpleFsStorageProvider("bot.json");
 //login to client
 const client = new MatrixClient(homeserver, accessToken, storage);
 AutojoinRoomsMixin.setupOnClient(client);
-
-//do not include replied message in message
-client.addPreprocessor(new RichRepliesPreprocessor(false));
 
 const filter = {
 	//dont expect any presence from m.org, but in the case presence shows up its irrelevant to this bot
