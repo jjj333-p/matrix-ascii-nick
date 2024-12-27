@@ -1,4 +1,4 @@
-# no-room-links
+# Emoji Free Nick
 
 This bot automatically redacts any memmbership event other than leaves and bans that contain non-ascii characters, so that they dont break bridges 
 
